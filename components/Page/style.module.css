@@ -1,0 +1,43 @@
+.title{
+    text-align: center;
+}
+
+.labelnome{
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.nome{
+    font-size: 35px;
+    height: 50px;
+    margin:auto;
+    width: 300px;
+}
+
+.nick{
+    font-size: 45px;
+}
+
+.areatexto{
+    text-align: center;
+}
+
+#top{
+    margin-top: 60vh;
+}
+
+.areamessages{
+    height: 60vh;
+}
+
+.inputmsg{
+    width: 90vw;
+    height: 10vh;
+    font-size: 25px;
+}

@@ -46,41 +46,60 @@ const Page = ()=>{
         setMessage('')
     }
 
+    function handleSetMessage(event){
+        if(event.nativeEvent.inputType ==='insertLineBreak'){
+            handleSendMessage(event)
+        }else{
+            setMessage(event.target.value)
+        }
+    }
+
     return(
         <>
-            <h1>Chat</h1>
+            <h1 className={Style.title}>Chat</h1>
             <div className={Style.body}>
                 {!nomeInformado?(
-                    <form onSubmit={event=>{handleSetName(event)}}>
-                        <label htmlFor="nome">Informe Seu nome:</label>
-                        <input type="text" value={nome} onChange={event=>setNome(event.target.value)}/>
+                    <form onSubmit={event=>{handleSetName(event)}} className={Style.form}>
+                        <label htmlFor="nome" className={Style.labelnome}>Nick Name:</label>
+                        <input 
+                            type="text" 
+                            value={nome} 
+                            onChange={event=>setNome(event.target.value)} 
+                            className={Style.nome}
+                            placeholder="Informe seu nome"
+                        />
                     </form>
                 ):(
-                    <span>
+                    <span className={Style.nick}>
                         NickName: <b>{nome}</b>
                     </span>
                 )}
 
-                {messages.length > 0?(
-                    <div className={Style.areamessages}>
-                        {messages.map((message,index)=>(
-                            <div
-                                key={index}
-                            >
-                                <Message
-                                    nick={message.nome}
-                                    message={message.message}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ):('')}
-
+                <div className={Style.areamessages}>
+                    {messages.length > 0?
+                        
+                            messages.map((message,index)=>(
+                                <div
+                                    key={index}
+                                >
+                                    <Message
+                                        nick={message.nome}
+                                        message={message.message}
+                                    />
+                                </div>
+                            ))
+                    :('')}
+                </div>
                 {nomeInformado?(
                     <>
-                        <form onSubmit={event=>{handleSendMessage(event)}}>
-                            <label htmlFor="msg">Digite a mensagem:</label>
-                            <input type="text" value={message} onChange={event=>setMessage(event.target.value)}/>
+                        <form onSubmit={event=>{handleSendMessage(event)}} className={Style.areatexto}>
+                            <textarea 
+                                type="text" 
+                                value={message} 
+                                onChange={event=>handleSetMessage(event)}
+                                placeholder='Digite sua mensagem'
+                                className={Style.inputmsg}
+                            />
                         </form>
                     </>
                 ):('')}
