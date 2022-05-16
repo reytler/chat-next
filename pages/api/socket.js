@@ -1,6 +1,7 @@
 import { Server } from 'Socket.IO'
 
 let messages = []
+let users = []
 
 const SocketHandler = (req, res) => {
   if (res.socket.server.io) {
@@ -15,6 +16,11 @@ const SocketHandler = (req, res) => {
       socket.on('sendMessage', msg => {
         messages.push(msg)
         socket.broadcast.emit('newMessage', messages)
+      })
+      socket.on('setUser', user => {
+        users.push(user)
+        console.log('Usuários aqui: ',users)
+        socket.broadcast.emit('newUser', users)
       })
     })
   }

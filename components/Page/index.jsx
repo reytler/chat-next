@@ -11,6 +11,9 @@ const Page = ()=>{
     const [message,setMessage] = useState('')
     const [messages,setMessages] = useState('')
     const [nomeInformado,setNomeInformado] = useState(false)
+    const [cor, setCor] = useState('white')
+    const [users,setUsers] = useState([])
+    const [user,setUser] = useState(null)
 
     useEffect(() =>{socketInitializer()}, [])
 
@@ -29,12 +32,23 @@ const Page = ()=>{
         socket.on('previousMessages',(messages)=>{
             setMessages(messages)
         })
+
+        socket.on('newUser',(users)=>{
+            setUsers(users)
+        })
     }
 
     function handleSetName(event){
         event.preventDefault();
-        setNomeInformado(true)
+        setNomeInformado(true);
+        setUser({nick:nome, cor:cor})
     }
+
+    useEffect(() =>{
+        if(user != null){
+            socket.emit('setUser',user)
+        }
+    }, [user])
 
     function handleSendMessage(event){
         event.preventDefault();
@@ -56,11 +70,14 @@ const Page = ()=>{
 
     return(
         <>
-            <h1 className={Style.title}>Chat</h1>
+            <h1 className={Style.title}>Chat do Reyt</h1>
             <div className={Style.body}>
                 {!nomeInformado?(
                     <form onSubmit={event=>{handleSetName(event)}} className={Style.form}>
                         <label htmlFor="nome" className={Style.labelnome}>Nick Name:</label>
+                        <div className={Style.inputcolor}>
+                            <input type="color" onChange={event=>setCor(event.target.value)}/>
+                        </div>
                         <input 
                             type="text" 
                             value={nome} 
@@ -71,7 +88,9 @@ const Page = ()=>{
                     </form>
                 ):(
                     <span className={Style.nick}>
-                        NickName: <b>{nome}</b>
+                        <div>
+                            <span className={Style.titlenick}>NickName:</span> <b style={{color:`${cor?cor:'white'}`}}>{nome}</b>
+                        </div>
                     </span>
                 )}
 
@@ -85,6 +104,7 @@ const Page = ()=>{
                                     <Message
                                         nick={message.nome}
                                         message={message.message}
+                                        users={users}
                                     />
                                 </div>
                             ))

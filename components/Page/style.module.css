@@ -1,5 +1,14 @@
+.titlenick{
+    color:#61dafb;
+}
+
+.inputcolor{
+    text-align: center;
+}
+
 .title{
     text-align: center;
+    color: #61dafb;
 }
 
 .labelnome{
@@ -21,7 +30,9 @@
 }
 
 .nick{
-    font-size: 45px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .areatexto{
@@ -34,10 +45,19 @@
 
 .areamessages{
     height: 60vh;
+    padding-left: 5px;
 }
 
 .inputmsg{
     width: 90vw;
     height: 10vh;
     font-size: 25px;
+    background-color: #20232a;
+}
+
+@media screen and (max-width: 320px) {
+    .nick{
+        font-size: 25px;
+        font-weight: bold;
+    }
 }
